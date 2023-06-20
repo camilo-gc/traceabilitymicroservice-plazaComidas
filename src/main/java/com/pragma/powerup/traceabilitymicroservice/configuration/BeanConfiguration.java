@@ -1,7 +1,8 @@
 package com.pragma.powerup.traceabilitymicroservice.configuration;
 
-
-import com.pragma.powerup.traceabilitymicroservice.adapters.driven.apis.twilio.adapter.TwilioApiAdapter;
+import com.pragma.powerup.traceabilitymicroservice.adapters.driven.mongodb.adapter.TraceabilityAdapter;
+import com.pragma.powerup.traceabilitymicroservice.adapters.driven.mongodb.mappers.ITraceabilityEntityMapper;
+import com.pragma.powerup.traceabilitymicroservice.adapters.driven.mongodb.repositories.ITraceabilityRepository;
 import com.pragma.powerup.traceabilitymicroservice.domain.api.ITraceabilityServicePort;
 import com.pragma.powerup.traceabilitymicroservice.domain.spi.ITraceabilityPersistencePort;
 import com.pragma.powerup.traceabilitymicroservice.domain.usecase.TraceabilityUseCase;
@@ -14,14 +15,17 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class BeanConfiguration {
 
+    private final ITraceabilityRepository traceabilityRepository;
+    private final ITraceabilityEntityMapper traceabilityEntityMapper;
+
     @Bean
-    public ITraceabilityServicePort twilioServicePort() {
-        return new TraceabilityUseCase(twilioPersistencePort());
+    public ITraceabilityServicePort traceabilityServicePort() {
+        return new TraceabilityUseCase(traceabilityPersistencePort());
     }
 
     @Bean
-    public ITraceabilityPersistencePort twilioPersistencePort() {
-        return new TwilioApiAdapter();
+    public ITraceabilityPersistencePort traceabilityPersistencePort() {
+        return new TraceabilityAdapter(traceabilityRepository, traceabilityEntityMapper);
     }
 
 }

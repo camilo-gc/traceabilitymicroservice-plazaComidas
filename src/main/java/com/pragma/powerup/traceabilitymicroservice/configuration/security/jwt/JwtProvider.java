@@ -1,8 +1,8 @@
 package com.pragma.powerup.traceabilitymicroservice.configuration.security.jwt;
 
 
+import com.pragma.powerup.traceabilitymicroservice.adapters.driven.mongodb.entities.PrincipalUser;
 import com.pragma.powerup.traceabilitymicroservice.domain.spi.IJwtProviderConfigurationPort;
-import com.pragma.powerup.traceabilitymicroservice.adapters.driven.entitys.PrincipalUser;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.apachecommons.CommonsLog;
